@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/css/index.css" />
+    <script src="/js/jquery-3.6.0.js"></script>
+    <script src="/js/bootstrap.bundle.js"></script>
+    <script src="/js/productJS.js"></script>
+
+    <title>商品詳細</title>
+</head>
+
+<body>
+    <!-- 導覽列 -->
+    <%- include('header.ejs') %>
+        <!-- 導覽列 -->
+
+        <main class="container">
+            <!-- 商品 -->
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="main-photo-container center">
+                        <img src="<%= imageDataT0.dir %>/<%= imageDataT0.filename %>" alt="產品圖片">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <h2><strong>
+                            <%= nameData[0].prod_name %>
+                        </strong></h2>
+                    <hr>
+                    <p><b>
+                            <%= brandData[0].brand %>
+                        </b></p>
+                    <h4 class="dollar"><strong>NT <%= priceData[0].price %></strong></h4>
+
+                    <div class="purchaseNumber">
+                        <label for="num"><b>數量&nbsp;:&nbsp;&nbsp;</b></label>
+                        <button id="minus" onclick="minus()">-</button>
+                        <input type="text" id="num" value="1" style="width: 30px;text-align: center;" readonly>
+                        <button id="plus" onclick="plus()">+</button>
+                    </div>
+                    <div class="mt-4">
+                        <button class="btn btn bg-white btn-lg me-2" id="collect" data-prod_id="<%= prodId %>"
+                            data-spec_id="<%= specId %>">
+                            <i class="bi bi-heart"></i>
+                            加入收藏
+                        </button>
+                        <button class="cart btn bg-white btn-lg me-2" id="cart" data-prod_id="<%= prodId %>"
+                            data-spec_id="<%= specId %>">
+                            <i class="bi bi-cart-plus"></i>
+                            加入購物車
+                        </button>
+                        <button class="btn bg-black text-white btn-lg">直接購買</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 商品資訊/商品內容 -->
+            <section class="bg-white container mt-5">
+
+                <ul class="nav nav-pills justify-content-center pt-4">
+                    <% if (imageDataT1.length> 0) { %>
+                        <li class="nav-item"><a data-bs-toggle="pill" class="nav-link active"
+                                href="#information">商品資訊</a></li>
+                        <li class="nav-item"><a data-bs-toggle="pill" class="nav-link" href="#specification">商品規格</a>
+                        </li>
+                        <% } else { %>
+                            <%- include('table.ejs') %>
+                                <% } %>
+                </ul>
+                <div class="tab-content container mt-5 ">
+                    <% if (imageDataT1.length> 0) { %>
+                        <div class="tab-pane active show center" id="information">
+                            <img src="<%= imageDataT1[0].dir %>/<%= imageDataT1[0].filename %>" alt="產品資訊" class="mb-5">
+                        </div>
+                        <% } %>
+                            <div class="tab-pane " id="specification">
+                                <%- include('table.ejs') %>
+                            </div>
+                </div>
+            </section>
+
+            <!-- 商品評價 -->
+            <section class="container bg-white mt-3 ">
+                <h2 class="pt-4 evaluate text-center"><strong>商品評價</strong></h2>
+                <hr>
+                <% commentData.forEach(function(comment) { %>
+                    <div class="circle"></div>
+                    <div class="buyer">
+                        <div class="rating mt-1">
+                            <% for ( let i=1 ; i <=5; i++ ) { %>
+                                <span class="bi bi-star<%= i <= comment.comment_grade ? '-fill' : '' %>"></span>
+                                <% } %>
+                        </div>
+
+                        <p class="mt-2">
+                            <%= comment.comment_time %> | 購入數量 <%= comment.count %>
+                        </p>
+                    </div>
+                    <div class="comment">
+                        <p>
+                            <%= comment.comment %>
+                        </p>
+                    </div>
+                    <hr>
+                    <% }); %>
+            </section>
+
+            <!-- 相關商品 -->
+            <%- include('relatedProduct.ejs') %>
+
+                <button type="button" id="BackTop" class="toTop-arrow"></button>
+                <!-- 在 index.ejs 中抓取 user_id -->
+                <div id="userId" data-user-id="<%= userId %>"></div>
+
+        </main>
+
+        <!-- footer -->
+        <%- include('footer.ejs') %>
+
+
+</body>
+
+</html>

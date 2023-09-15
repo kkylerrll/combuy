@@ -1,9 +1,9 @@
 <!-- 相關商品 -->
-<section class="container bg-white mt-3">
+<section class="container mt-3">
     <h2 class="pt-3 related text-center"><strong>相關商品</strong></h2>
     <div class="row">
         <% relatedProducts.forEach(function(relatedProduct) { %>
-            <div class="col-3">
+            <div class="col-6 col-md-4 col-lg-3 ">
                 <a id="prodCard-<%= relatedProduct.prod_id %>"
                     href="/product/<%= relatedProduct.prod_id %>/<%= relatedProduct.spec_id %>">
                     <div class="card">
@@ -17,15 +17,15 @@
                                 <%= relatedProduct.spec_name %>
                             </p>
                             <div class="priceIcon">
-                                <span class="mt-4" style="font-size: 1.5em;">
+                                <span class="mt-lg-4">
                                     NT <%= relatedProduct.price %>
                                 </span>
-                                <button class="btn btn-lg" data-prod_id="<%= prodId %>" onclick="collect()"
-                                    data-spec_id="<%= specId %>">
+                                <button class="btn btn-lg no-link" id="addtocollect" data-prod_id="<%= relatedProduct.prod_id %>"
+                                    data-spec_id="<%= relatedProduct.spec_id %>">
                                     <i class="bi bi-heart"></i>
                                 </button>
-                                <button class="btn btn-lg" data-prod_id="<%= prodId %>" onclick="cart()"
-                                    data-spec_id="<%= specId %>">
+                                <button class="btn btn-lg no-link" id="addtocart" data-prod_id="<%= relatedProduct.prod_id %>"
+                                    data-spec_id="<%= relatedProduct.spec_id %>">
                                     <i class="bi bi-cart-plus"></i>
                                 </button>
                             </div>

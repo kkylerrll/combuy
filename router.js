@@ -9,7 +9,7 @@ var conn = mysql.createConnection({
     // ... your connection configuration ...
     host: 'localhost',
     user: 'root',
-    password: 'root',
+    password: '',
     database: 'combuy',
     port: '3306'
 });
@@ -92,19 +92,6 @@ router.get('/product/:prodId/:specId', async (req, res) => {
     }
 });
 
-// 通知
-// router.get('/notifications', async (req, res) => {
-//     try {
-//         var orderDate = await queryDatabase('SELECT order_date FROM `orders` WHERE state = 2;');
-//         res.render('index',{
-//             orderDate: orderDate,
-//         })
-//     } catch (error) {
-//         console.error('獲取通知系統失敗', error);
-//         res.status(500).send('内部伺服器錯誤');
-//     }
-// });
-
 // 加入購物車
 router.post('/addcart', async (req, res) => {
     try {
@@ -132,6 +119,50 @@ router.post('/addcollect', async (req, res) => {
     }
 });
 
+// 相關加入購物車
+router.post('/addCart', async (req, res) => {
+    try {
+        var { user_id, prod_id, spec_id } = req.body;
+        var spl = 'INSERT INTO shopcart (user_id, prod_id, spec_id) VALUES (?, ?, ?)';
+        await queryDatabase(spl, [user_id, prod_id, spec_id]);
+
+        res.status(200).send('成功加入購物車');
+    } catch (error) {
+        console.error('加入購物車失敗', error);
+        res.status(500).send('內部伺服器錯誤');
+    }
+});
+
+// 相關加入收藏
+router.post('/addCollect', async (req, res) => {
+    try {
+        var { user_id, prod_id, spec_id } = req.body;
+        var sql = 'INSERT INTO collect (user_id, prod_id, spec_id) VALUES (?, ?, ?)';
+        await queryDatabase(sql, [user_id, prod_id, spec_id]);
+        res.status(200).send('成功加入收藏');
+    } catch (error) {
+        console.error('加入收藏失敗', error);
+        res.status(500).send('內部伺服器錯誤');
+    }
+});
+
+// 直接購買 檢查購物車紀錄是否存在
+router.post('/checkcart', async (req, res) => {
+    try {
+        var { user_id, prod_id, spec_id } = req.body;
+        var spl = 'SELECT COUNT(*) AS count FROM shopcart WHERE user_id = ? AND prod_id = ? AND spec_id = ?' ;
+        var result = await queryDatabase(spl, [user_id, prod_id, spec_id]);
+
+        if (result[0].count > 0) {
+            res.status(200).json({ exists: true });
+        } else {
+            res.status(200).json({ exists: false });
+        }
+    } catch(error) {
+        console.error('檢查購物車失敗', error);
+        res.status(500).send('內部伺服器錯誤');
+    }
+});
 
 // 封裝資料庫查詢為 Promise
 function queryDatabase(sql, params) {

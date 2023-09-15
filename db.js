@@ -7,7 +7,7 @@ exports.exec = (sql, data, callback) => {
     var connection = mysql.createConnection({
         host: 'localhost',
         user: 'root',
-        password: 'root',
+        password: '',
         database: 'combuy',
         // 是否可以允許使用者一口氣傳入很多sql指令
         multipleStatements: true,

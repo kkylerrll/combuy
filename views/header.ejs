@@ -2,25 +2,25 @@
     <nav class="header">
         <ul>
             <li>
-                <a href="#" title="回首頁"><img src="./images/logo/cambuyLogo.png" alt="cambuyLogo" /></a>
+                <a href="#" title="回首頁"><img src="/images/logo/cambuyLogo.png" alt="cambuyLogo" /></a>
             </li>
             <li>
                 <form action="/search" method="get">
                     <input type="text" name="search" value="search" /><button type="submit" title="搜尋">
-                        <img src="./images/icons/search.png" alt="search" />
+                        <img src="/images/icons/search.png" alt="search" />
                     </button>
                 </form>
             </li>
             <li>
                 <label class="switch" title="深/淺色模式">
-                    <input type="checkbox" />
+                    <input type="checkbox" id="dark-mode-toggle" />
                     <span class="slider moon">☽</span>
                     <span class="slider round sun">☼</span>
                 </label>
             </li>
             <li>
                 <div class="notification">
-                    <a href="#" id="notification-link"><img src="./images/icons/advice.png" alt="advice" /></a>
+                    <a href="#" id="notification-link"><img src="/images/icons/advice.png" alt="advice" /></a>
                     <div class="hidden" id="notification-content">
                         <a href="#" class="text-black">
                             <% for (let i=0; i < orderDate.length; i++) { %>
@@ -42,10 +42,10 @@
                 </div>
             </li>
             <li>
-                <a href="#" title="會員中心"><img src="./images/icons/member.png" alt="member" /></a>
+                <a href="#" title="會員中心"><img src="/images/icons/member.png" alt="member" /></a>
             </li>
             <li>
-                <a href="#" title="購物車"><img src="./images/icons/buy-cart.png" alt="buy-cart" /></a>
+                <a href="#" title="購物車"><img src="/images/icons/buy-cart.png" alt="buy-cart" /></a>
             </li>
         </ul>
     </nav>
